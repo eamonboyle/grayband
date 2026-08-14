@@ -1,0 +1,6 @@
+id,left_artist,left_title,right_artist,right_title,expected
+1,The Beatles,Hey Jude,beatles,hey jude,Accept
+2,Daft Punk,Get Lucky,Daft Punk feat. Pharrell Williams,Get Lucky (Live),Gray
+3,Radiohead,Karma Police,ABBA,Dancing Queen,Reject
+4,Beyoncé,Crazy in Love,Beyonce,Crazy In Love,Accept
+5,Radiohead,Street Spirit (Fade Out),Radiohead,Street Spirit,Gray

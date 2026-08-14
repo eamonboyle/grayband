@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PackageId>Grayband</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Eamon Boyle</Authors>
+    <Description>Deterministic record matching with field-level explanations. An LLM is only called on a calibrated gray band.</Description>
+    <PackageTags>matching;record-linkage;entity-resolution;explainable</PackageTags>
+    <RepositoryUrl>https://github.com/eamonboyle/grayband</RepositoryUrl>
+  </PropertyGroup>
+</Project>
