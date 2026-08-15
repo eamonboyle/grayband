@@ -22,8 +22,7 @@ public sealed class GraybandMatcher
             ScoreField("title", left.Title, right.Title)
         };
 
-        // compare release if available
-        if (!string.IsNullOrWhiteSpace(left.Release) && !string.IsNullOrWhiteSpace(right.Release))
+        if (!string.IsNullOrWhiteSpace(left.Release) || !string.IsNullOrWhiteSpace(right.Release))
             breakdown.Add(ScoreField("release", left.Release ?? "", right.Release ?? ""));
 
         var score = Weighted(breakdown);
@@ -68,7 +67,6 @@ public sealed class GraybandMatcher
         var best = Math.Max(jw, token);
         var method = token > jw ? "token-sort" : "jaro-winkler";
         var because = $"{method} {best:0.00} on '{left}' vs '{right}'";
-        
         return new FieldScore(field, Math.Round(best, 4), method, because);
     }
 

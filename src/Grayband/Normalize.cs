@@ -9,23 +9,28 @@ public static partial class Normalize
     [GeneratedRegex(@"[^a-z0-9]+")]
     private static partial Regex NonWord();
 
-    public static string Lookup(string value)
+    public static string Lookup(string value) => string.Concat(Words(value));
+
+    public static IReadOnlyList<string> Words(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            return "";
+            return [];
 
-        // Strip leading articles first (before normalization)
-        var stripped = value.Trim().ToLowerInvariant();
-        foreach (var article in new[] { "the ", "a ", "an " })
-        {
-            if (stripped.StartsWith(article))
-            {
-                stripped = stripped.Substring(article.Length).Trim();
-                break;
-            }
-        }
+        var words = NonWord().Split(Fold(value))
+            .Where(static w => w.Length > 0)
+            .ToList();
 
-        var folded = stripped.Normalize(NormalizationForm.FormD);
+        if (words.Count > 1 && IsLeadingArticle(words[0]))
+            words.RemoveAt(0);
+
+        return words;
+    }
+
+    private static bool IsLeadingArticle(string word) => word is "the" or "a" or "an";
+
+    private static string Fold(string value)
+    {
+        var folded = value.Normalize(NormalizationForm.FormD);
         var sb = new StringBuilder(folded.Length);
         foreach (var c in folded)
         {
@@ -34,12 +39,6 @@ public static partial class Normalize
             sb.Append(char.ToLowerInvariant(c));
         }
 
-        return NonWord().Replace(sb.ToString(), "");
+        return sb.ToString();
     }
-
-    public static IReadOnlyList<string> Words(string value) =>
-        NonWord().Split(value)
-            .Select(Lookup)
-            .Where(static w => w.Length > 0)
-            .ToArray();
 }
